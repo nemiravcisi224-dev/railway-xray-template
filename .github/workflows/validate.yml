@@ -1,0 +1,41 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shell syntax check
+        run: |
+          sh -n entrypoint.sh
+          sh -n generate-client.sh
+
+      - name: Render config template and validate JSON
+        run: |
+          PORT=8080 \
+          UUID=11111111-2222-3333-4444-555555555555 \
+          WS_PATH=/ci-check \
+          sh -c 'sed -e "s/__PORT__/${PORT}/g" \
+                     -e "s/__UUID__/${UUID}/g" \
+                     -e "s|__WS_PATH__|${WS_PATH}|g" \
+                     config.template.json' > /tmp/config.json
+          python3 -m json.tool /tmp/config.json > /dev/null
+          grep -q '"protocol": "vless"' /tmp/config.json
+
+      - name: Smoke test client generator
+        run: |
+          DOMAIN=example.up.railway.app \
+          UUID=11111111-2222-3333-4444-555555555555 \
+          WS_PATH=/ci-check \
+          ./generate-client.sh > /tmp/client.yaml
+          grep -q 'type: vless' /tmp/client.yaml
+          grep -q 'example.up.railway.app' /tmp/client.yaml
+
+      - name: Build Docker image
+        run: docker build -t railway-xray-template:ci .
