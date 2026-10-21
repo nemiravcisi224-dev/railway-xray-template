@@ -1,0 +1,20 @@
+{
+  "log": { "loglevel": "warning" },
+  "inbounds": [
+    {
+      "port": __PORT__,
+      "protocol": "vless",
+      "settings": {
+        "clients": [ { "id": "__UUID__", "flow": "" } ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": { "path": "__WS_PATH__" }
+      },
+      "sniffing": { "enabled": true, "destOverride": ["http", "tls"] }
+    }
+  ],
+  "outbounds": [ { "protocol": "freedom", "tag": "direct" } ]
+}

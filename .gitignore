@@ -1,0 +1,7 @@
+.env
+config.json
+*.yaml
+!*.example.yaml
+# Never commit generated client configs: they contain your UUID.
+client-*.yaml
+clash-*.yaml
