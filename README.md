@@ -33,7 +33,7 @@ infrastructure, your own UUID, and no third-party proxy provider.
 5. Generate your client entry:
 
    ```sh
-   DOMAIN=your-app.up.railway.app UUID=<your-uuid> WS_PATH=/a1b2c3d4e5f6 ./generate-client.sh
+   DOMAIN=your-app.up.railway.app UUID=<your-uuid> WS_PATH=/a1b2c3d4e5f6 sh generate-client.sh
    ```
 
 6. Paste the output into your Clash / mihomo config and test the node.
