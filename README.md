@@ -13,7 +13,7 @@ infrastructure, your own UUID, and no third-party proxy provider.
 
 ## Features
 
-- Pinned Xray version (`v25.12.8`, tested with mihomo / Clash Meta clients)
+- Pinned Xray version (`v26.10.21`, emergency security update, Oct 2026; smoke-tested with this template's VLESS + WS config)
 - No secrets in the repo — UUID and WebSocket path come from environment variables
 - Works with zero configuration for a first boot: if `UUID` / `WS_PATH` are unset,
   the entrypoint generates them and prints them once in the deploy log
